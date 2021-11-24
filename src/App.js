@@ -1,4 +1,4 @@
-
+import Button from './components/Button';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
@@ -15,10 +15,43 @@ firebase.initializeApp({
   measurementId: "G-CTHKJRHVPR"
 })
 
+const auth = new firebase.auth
+
 function App() {
+  const [user, setUser] = useState(() => auth.currentUser());
+
+  useEffect(() => {
+    auth.onAuthStateChanged(user => {
+      if(user){
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+      if(initializing){
+        setInitializing(false);
+      }
+    });
+    return unsubscribe;
+  }, [])
+
+   const signInWithGoogle = async () => {
+
+    const provider = new firebase.auth.GoogleAuthProvider();
+    //set language
+    auth.useDeviceLanguage();
+    //start
+    try {
+      await auth.signInWithPopup(provider);
+    } catch (error) {
+      console.error(error);
+    }
+   };
+
+   if (initializing)
+
   return (
     <div>
-     
+     <Button onClick={signInWithGoogle}> Sign in with Google</Button>
     </div>
   );
 }
