@@ -1,5 +1,4 @@
-import React from 'react';
-import './App.css';
+
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
@@ -18,10 +17,8 @@ firebase.initializeApp({
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-      
-      </header>
+    <div>
+     
     </div>
   );
 }
